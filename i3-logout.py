@@ -102,15 +102,12 @@ class i3exit(tk.Frame):
         self.icons[self.currentIconIndex].button.focus_set()
 
     def executeCommand(self, icon):
-
         if(icon.cmd == 'app.quit'):
             self.quit()
             return
-
         if(icon.cmd):
-            params = icon.cmd.split(" ")
-            Popen(params)
-            self.quit()
+            Popen(icon.cmd, shell=True)
+        self.quit()
         return
 
     def initPanel(self):
@@ -121,8 +118,8 @@ class i3exit(tk.Frame):
     def initIcons(self):
         self.icons.append( self.Icon(name='Lock', icon='icon-lock.png', cmd='i3lock') )
         self.icons.append( self.Icon(name='Logout', icon='icon-logout.png', cmd='i3-msg exit') )
-        self.icons.append( self.Icon(name='Suspend', icon='icon-suspend.png', cmd='lock & systemctl suspend') )
-        self.icons.append( self.Icon(name='Hibernate', icon='icon-hibernate.png', cmd='lock & systemctl hibernate') )
+        self.icons.append( self.Icon(name='Suspend', icon='icon-suspend.png', cmd='i3lock && systemctl suspend') )
+        self.icons.append( self.Icon(name='Hibernate', icon='icon-hibernate.png', cmd='i3lock && systemctl hibernate') )
         self.icons.append( self.Icon(name='Reboot', icon='icon-reboot.png', cmd='systemctl reboot') )
         self.icons.append( self.Icon(name='Shutdown', icon='icon-shutdown.png', cmd='systemctl poweroff') )
 
